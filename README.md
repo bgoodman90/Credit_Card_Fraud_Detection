@@ -79,8 +79,9 @@ I first plotted histograms for the downsampled data split by the Class variable 
 
 But there are some variables that do not differentiate the Class variable vary well.  See feature V22 as an example:
 
-![V4 Histogram Split](https://github.com/bgoodman90/Credit_Card_Fraud_Detection/blob/main/breakdown_plots/Histograms_Downsample_Split/V22_hist.png)
+![V22 Histogram Split](https://github.com/bgoodman90/Credit_Card_Fraud_Detection/blob/main/breakdown_plots/Histograms_Downsample_Split/V22_hist.png)
 
-From here, I ranked the features using random forest classifier.  The scores for the features look like this:
+From here, I obtained the feature importance, ranking the features, using random forest classifier.  The scores for the features look like this:
 
+![Feature Importance](https://github.com/bgoodman90/Credit_Card_Fraud_Detection/blob/main/feature_scores.png)
 
