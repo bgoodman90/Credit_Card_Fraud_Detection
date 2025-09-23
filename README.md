@@ -58,3 +58,21 @@ Number of non-fraudulent transactions: 284315
 Number of fraudulent transactions: 492
 
 Fraudulent transactions make up a very small 0.17% of the data.
+
+Taking a quick look at the initial histograms (found in breakdown_plots/Histograms) I don't see anything such as outliers or strange behaviour that needs cleaning.  But I could be missing something here.
+
+## Downsampling
+
+There are a few ways to deal with an imbalanced data set.  My first and only methodology I gave a go at was Downsampling.
+
+One could also upsample, basically creating randomly generated similar data from the ~500 fraudulent transactions we have.  But there is such an enormous gap between the 2 classes I didn't think this was a good idea.
+
+One can also provide a model with a particular metric to compare it's results against when optimizing; such as changing the weighting of classifying one result vs another, or using a metric such as F1 Score.
+
+I decided to try downsampling first because doing so will provide us with 984 cases, which isn't too bad.  This means we can train on several hundred cases.  It follows the 10x rule, with our number of input variables being maximum 30, meaning that 300 cases should be enough.  If we split training/testing into 90-10 split, it means our training data has 885 cases; more than double the necessary number to follow the 10x rule.
+
+## Feature Selection
+
+I first plotted histograms for the downsampled data split by class in breakdown_plots/Histograms_Downsample_Split.  I found that many variables do have differentiating features.  For a good example see here:
+
+
