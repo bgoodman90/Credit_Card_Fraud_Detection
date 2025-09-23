@@ -81,7 +81,9 @@ But there are some variables that do not differentiate the Class variable vary w
 
 breakdown_plots/Histograms_Downsample_Split/V22_hist.png
 Credit_Card_Fraud_Detection/edit/main/README.md
-![alt text](https://github.com/bgoodman90/Credit_Card_Fraud_Detection/blob/breakdown_plots/Histograms_Downsample_Split/V22_hist.png?raw=true)
+![V4 Histogram Split](https://github.com/bgoodman90/Credit_Card_Fraud_Detection/blob/main/breakdown_plots/Histograms_Downsample_Split/V4_hist.png)
+
+https://github.com/bgoodman90/Credit_Card_Fraud_Detection/blob/main/breakdown_plots/Histograms_Downsample_Split/V4_hist.png
 
 
 
