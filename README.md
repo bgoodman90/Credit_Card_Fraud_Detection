@@ -1,108 +1,96 @@
-# Credit_Card_Fraud_Detection
-An investigation of the Credit Card Fraud Detection data set on Kaggle.
+# Credit Card Fraud Detection
 
-The original data set and a summary of it's input variables etc can be found here:
-https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud
+An investigation of the **Credit Card Fraud Detection dataset** from Kaggle.  
 
-## Goal:
+Original dataset and variable summary:  
+👉 [Kaggle – Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
 
-Investigate the data set, potentially flag any problems, and eventually try to create a ML/AI model that predicts fraudulent financial transactions.
+---
 
-## Navigating the Repository
+## Goal
+- Explore and analyze the dataset  
+- Identify potential issues or limitations  
+- Build and evaluate machine learning models to predict fraudulent financial transactions  
 
-The code I have written for all my analysis is in:
+---
 
-fraud_detection_initial_screen.ipynb
+## Repository Structure
 
-which can be found in the main repository.
+- **`fraud_detection_initial_screen.ipynb`**  
+  Main notebook containing exploratory analysis and modeling.
 
-### The folder breakdown_plots
+- **`breakdown_plots/`**  
+  Contains plots generated during analysis, primarily histograms.  
+  - **`Histograms/`** – Histograms of each variable in the dataset (similar to Kaggle, but recreated for hands-on analysis).  
+  - **`Histograms_Downsample_Split/`** – Histograms after downsampling, split by class:  
+    - `0` → Non-fraudulent transactions  
+    - `1` → Fraudulent transactions  
 
-Contains a variety of plots I created.  Mostly histograms.
+---
 
-There are 2 main folders to look at.
+## Initial Observations
 
-Histograms: Contains the histograms for each variable provided in the data set.  This can technically already be found on the Kaggle data set, but I wanted to do the analysis myself.
+- **Scope:** Data covers only 2 days and does not include individual client separation → limits long-term behavioral insights.  
+- **Preprocessing:** Most features are PCA components derived from original transaction variables (e.g., type, origin country, destination country, business/personal account).  
+- **Imbalance:**  
+  - Non-fraudulent: **284,315**  
+  - Fraudulent: **492**  
+  - Fraudulent transactions make up only **0.17%** of the dataset.  
+- **Quality:** No missing values. Dataset has **31 features** and **284,807 rows**.  
 
-Histograms_Downsample_Split: Here I have done 2 things. First I downsampled the majority class (non-fraudulent) so that there is the same number of fraudulent and non-fraudulent cases. These histograms also show the separate histograms for both classes:
+If original categorical variables were available, I would:  
+1. One-hot encode categorical features.  
+2. Perform data quality checks and feature engineering (e.g., international vs. domestic transactions).  
+3. Apply PCA to reduce dimensionality and highlight differentiating features.  
 
-0: Non-Fraudulent Transaction
+---
 
-1: Fraudulent Transaction
+## Handling Class Imbalance
 
-## Initial observations:
+- **Chosen method:** Downsampling → balanced dataset with 492 fraudulent + 492 non-fraudulent transactions (984 total).  
+- **Rationale:**  
+  - Training size is sufficient (~885 samples after 90/10 train-test split).  
+  - Other options include upsampling (synthetic minority generation) or applying cost-sensitive metrics (e.g., F1 score, class weighting).  
 
-The data set only covers 2 days of data, and does not include separation of clients.  These combined mean we can't make any longer term pattern recognition of how particular clients tend to behave.
+---
 
-The data set has been altered from it's original format.  Most of the given variables are from Principle Component analysis (PCA).  I would hazard a guess that these PCA components are likely from original variables that provide categories such as but not excluding:
--transaction type
--country of money origin
--country of money destination
--business or personal accounts
--likely other variables I'm not aware of within the financial space
+## Feature Exploration & Selection
 
-The way I would have done this if I had these variables is that I would have one-hot-encoded the variables just listed.  Before one-hot-encoding, I'd check for data quality etc and see if the data needed cleaning.  I would also feature engineer things like turning country of origin into things like international vs national transactions.
+- Plotted downsampled histograms split by fraud class.  
+  - Example of a **differentiating feature**:  
+    ![V4 Histogram Split](https://github.com/bgoodman90/Credit_Card_Fraud_Detection/blob/main/breakdown_plots/Histograms_Downsample_Split/V4_hist.png)  
+  - Example of a **non-differentiating feature**:  
+    ![V22 Histogram Split](https://github.com/bgoodman90/Credit_Card_Fraud_Detection/blob/main/breakdown_plots/Histograms_Downsample_Split/V22_hist.png)  
 
-After one-hot-encoding, I would reduce these features using PCA (a feature extraction methodology using orthogonality).
+- Used a **Random Forest classifier** to obtain feature importances:  
+  ![Feature Importance](https://github.com/bgoodman90/Credit_Card_Fraud_Detection/blob/main/feature_scores.png)  
 
-The reason for doing this is that the one-hot-encoded data set was likely way too large in scale.  It would create 2 problems, first being the time it would take a model to train, and another being the model's ability to parse out the important information.  PCA has the ability to highlight important/differentiating features.
+- Selected top **17 features** (cutoff at feature `V19`) for modeling.  
 
-## Initial Analysis
+---
 
-This data set looks pretty clean at a first glance.  No missing values. 31 features (including Class) and 284807 total cases.
+## Modeling & Results
 
-The data is highly imbalanced as one can see here:
+Models were tuned via randomized CV grid search (stratified 5-fold, balanced classes, fixed random seed).  
 
-Number of non-fraudulent transactions: 284315
+**Cross-Validation Accuracy (avg. over 5 folds):**
+- Random Forest → **93.93%**  
+- XGBoost → **94.35%**  
+- Logistic Regression → **94.46%**  
+- Bernoulli Naive Bayes → **91.18%**  
+- Support Vector Classifier (SVC) → **94.12%**  
+- Majority Voting (XGBoost + Logistic Regression + SVC) → **94.46% ± 0.97%**
 
-Number of fraudulent transactions: 492
+**Key Takeaways:**
+- Models perform consistently around **94–95% accuracy** on the balanced dataset.  
+- Results are strong given the dataset limitations and imbalance.  
+- Future improvements could include:  
+  - Combining downsampling + upsampling  
+  - Evaluating performance on full (imbalanced) data  
+  - Analyzing confusion matrices (false positives vs. false negatives are critical in finance)  
 
-Fraudulent transactions make up a very small 0.17% of the data.
+---
 
-Taking a quick look at the initial histograms (found in breakdown_plots/Histograms) I don't see anything such as outliers or strange behaviour that needs cleaning.  But I could be missing something here.
+## Summary
 
-## Downsampling
-
-There are a few ways to deal with an imbalanced data set.  My first and only methodology I gave a go at was Downsampling.
-
-One could also upsample, basically creating randomly generated similar data from the ~500 fraudulent transactions we have.  But there is such an enormous gap between the 2 classes I didn't think this was a good idea.
-
-One can also provide a model with a particular metric to compare it's results against when optimizing; such as changing the weighting of classifying one result vs another, or using a metric such as F1 Score.
-
-I decided to try downsampling first because doing so will provide us with 984 cases, which isn't too bad.  This means we can train on several hundred cases.  It follows the 10x rule, with our number of input variables being maximum 30, meaning that 300 cases should be enough.  If we split training/testing into 90-10 split, it means our training data has 885 cases; more than double the necessary number to follow the 10x rule.
-
-## Feature Selection
-
-I first plotted histograms for the downsampled data split by the Class variable in breakdown_plots/Histograms_Downsample_Split.  I found that many variables do have differentiating features.  For a good example see the histogram for feature 'V4' here:
-
-![V4 Histogram Split](https://github.com/bgoodman90/Credit_Card_Fraud_Detection/blob/main/breakdown_plots/Histograms_Downsample_Split/V4_hist.png)
-
-But there are some variables that do not differentiate the Class variable vary well.  See feature V22 as an example:
-
-![V22 Histogram Split](https://github.com/bgoodman90/Credit_Card_Fraud_Detection/blob/main/breakdown_plots/Histograms_Downsample_Split/V22_hist.png)
-
-From here, I obtained the feature importance, ranking the features, using random forest classifier.  The scores for the features look like this:
-
-![Feature Importance](https://github.com/bgoodman90/Credit_Card_Fraud_Detection/blob/main/feature_scores.png)
-
-How to read the plot: The higher the Importance Score is, the better that variable is at differentiating between a transaction being fraudulent and non-fraudulent.
-
-Now normally I would use something more scientific at this point like adding one variable at a time to see how it changes the accuracy of different ML models (Forward or Backward Stepwise selection process).  I wanted to perform something a little faster here though and I eyeballed the histograms of some of the lower scoring features.  The last variable that seems to have differentiating behaviour on the Class variable is 'V19'.  As such I removed everything in the plot above to the right of that feature, reducing our list of features to 17 instead of 30.
-
-I then performed predictions using different models.  For each one I performed a randomized CV grid search to tune hyperparamters.  The cross validation was stratified (balanced classes) 5-fold (for efficiency).  The cross validation was randomized using the same seed for each model to provide fairness in comparison.
-
-The summary of the results for the average accuracy over the 5 cross validation folds of each model type are as follows:
-Random Forest: 93.93%
-XGBoost: 94.35%
-Logistic Regression: 94.46%
-Bernoulli Naive Bayes: 91.18%
-Support Vector Classification (SVC): 94.12%
-Majority Voting using XGBoost, Logistic Regression and SVC: 94.46% +/- 0.97% (standard deviation over 5-folds)
-
-The test accuracy ranges around similar values to the CV results.
-
-I consider this a decent result for a few hours of work.  Getting close to 95% accurate on a downsampled (and thus balanced) data set is a good result.
-
-What else could one try?  Perhaps a mix of Downsampling and Upsampling.  Also checking how this performs on the data removed, but I expect the results are good.
-
-I didn't provide a confusion matrix, but likely knowing false-positives vs false-negatives is very important in the financial space.  Knowing what models reduce which of those you want to avoid is the best performing model.
+This quick exploration achieved ~95% accuracy using standard ML models on a balanced dataset. While strong, real-world deployment would require deeper investigation into feature engineering, class imbalance handling, and error trade-offs (false positives vs. false negatives).  
