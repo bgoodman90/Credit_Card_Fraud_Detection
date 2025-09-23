@@ -85,3 +85,22 @@ From here, I obtained the feature importance, ranking the features, using random
 
 ![Feature Importance](https://github.com/bgoodman90/Credit_Card_Fraud_Detection/blob/main/feature_scores.png)
 
+Now normally I would use something more scientific at this point like adding one variable at a time to see how it changes the accuracy of different ML models (Forward or Backward Stepwise selection process).  I wanted to perform something a little faster here though and I eyeballed the histograms of some of the lower scoring features.  The last variable that seems to have differentiating behaviour on the Class variable is 'V19'.  As such I removed everything in the plot above to the right of that feature, reducing our list of features to 17 instead of 30.
+
+I then performed predictions using different models.  For each one I performed a randomized CV grid search to tune hyperparamters.  The cross validation was stratified (balanced classes) 5-fold (for efficiency).  The cross validation was randomized using the same seed for each model to provide fairness in comparison.
+
+The summary of the results for the average accuracy over the 5 cross validation folds of each model type are as follows:
+Random Forest: 93.93%
+XGBoost: 94.35%
+Logistic Regression: 94.46%
+Bernoulli Naive Bayes: 91.18%
+Support Vector Classification (SVC): 94.12%
+Majority Voting using XGBoost, Logistic Regression and SVC: 94.46% +/- 0.97% (standard deviation over 5-folds)
+
+The test accuracy ranges around similar values to the CV results.
+
+I consider this a decent result for a few hours of work.  Getting close to 95% accurate on a downsampled (and thus balanced) data set is a good result.
+
+What else could one try?  Perhaps a mix of Downsampling and Upsampling.  Also checking how this performs on the data removed, but I expect the results are good.
+
+I didn't provide a confusion matrix, but likely knowing false-positives vs false-negatives is very important in the financial space.  Knowing what models reduce which of those you want to avoid is the best performing model.
