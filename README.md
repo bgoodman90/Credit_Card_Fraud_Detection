@@ -73,6 +73,15 @@ I decided to try downsampling first because doing so will provide us with 984 ca
 
 ## Feature Selection
 
-I first plotted histograms for the downsampled data split by class in breakdown_plots/Histograms_Downsample_Split.  I found that many variables do have differentiating features.  For a good example see here:
+I first plotted histograms for the downsampled data split by the Class variable in breakdown_plots/Histograms_Downsample_Split.  I found that many variables do have differentiating features.  For a good example see the histogram for feature 'V4' here:
+
+breakdown_plots/Histograms_Downsample_Split/V4_hist.png
+
+But there are some variables that do not differentiate the Class variable vary well.  See feature V22 as an example:
+
+breakdown_plots/Histograms_Downsample_Split/V22_hist.png
+Credit_Card_Fraud_Detection/edit/main/README.md
+![alt text](https://github.com/bgoodman90/Credit_Card_Fraud_Detection/blob/breakdown_plots/Histograms_Downsample_Split/V22_hist.png?raw=true)
+
 
 
