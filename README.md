@@ -8,6 +8,28 @@ https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud
 
 Investigate the data set, potentially flag any problems, and eventually try to create a ML/AI model that predicts fraudulent financial transactions.
 
+## Navigating the Repository
+
+The code I have written for all my analysis is in:
+
+fraud_detection_initial_screen.ipynb
+
+which can be found in the main repository.
+
+### The folder breakdown_plots
+
+Contains a variety of plots I created.  Mostly histograms.
+
+There are 2 main folders to look at.
+
+Histograms: Contains the histograms for each variable provided in the data set.  This can technically already be found on the Kaggle data set, but I wanted to do the analysis myself.
+
+Histograms_Downsample_Split: Here I have done 2 things. First I downsampled the majority class (non-fraudulent) so that there is the same number of fraudulent and non-fraudulent cases. These histograms also show the separate histograms for both classes:
+
+0: Non-Fraudulent Transaction
+
+1: Fraudulent Transaction
+
 ## Initial observations:
 
 The data set only covers 2 days of data, and does not include separation of clients.  These combined mean we can't make any longer term pattern recognition of how particular clients tend to behave.
@@ -27,4 +49,12 @@ The reason for doing this is that the one-hot-encoded data set was likely way to
 
 ## Initial Analysis
 
-This data set looks pretty clean at a first glance.  No missing values.
+This data set looks pretty clean at a first glance.  No missing values. 31 features (including Class) and 284807 total cases.
+
+The data is highly imbalanced as one can see here:
+
+Number of non-fraudulent transactions: 284315
+
+Number of fraudulent transactions: 492
+
+Fraudulent transactions make up a very small 0.17% of the data.
