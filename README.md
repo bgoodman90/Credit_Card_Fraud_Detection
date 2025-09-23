@@ -81,6 +81,6 @@ But there are some variables that do not differentiate the Class variable vary w
 
 ![V4 Histogram Split](https://github.com/bgoodman90/Credit_Card_Fraud_Detection/blob/main/breakdown_plots/Histograms_Downsample_Split/V22_hist.png)
 
-
+From here, I ranked the features using random forest classifier.  The scores for the features look like this:
 
 
