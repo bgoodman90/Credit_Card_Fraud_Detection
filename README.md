@@ -85,6 +85,8 @@ From here, I obtained the feature importance, ranking the features, using random
 
 ![Feature Importance](https://github.com/bgoodman90/Credit_Card_Fraud_Detection/blob/main/feature_scores.png)
 
+How to read the plot: The higher the Importance Score is, the better that variable is at differentiating between a transaction being fraudulent and non-fraudulent.
+
 Now normally I would use something more scientific at this point like adding one variable at a time to see how it changes the accuracy of different ML models (Forward or Backward Stepwise selection process).  I wanted to perform something a little faster here though and I eyeballed the histograms of some of the lower scoring features.  The last variable that seems to have differentiating behaviour on the Class variable is 'V19'.  As such I removed everything in the plot above to the right of that feature, reducing our list of features to 17 instead of 30.
 
 I then performed predictions using different models.  For each one I performed a randomized CV grid search to tune hyperparamters.  The cross validation was stratified (balanced classes) 5-fold (for efficiency).  The cross validation was randomized using the same seed for each model to provide fairness in comparison.
