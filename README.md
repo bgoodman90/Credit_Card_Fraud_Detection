@@ -81,9 +81,12 @@ Models were tuned via randomized CV grid search (stratified 5-fold, balanced cla
 - Support Vector Classifier (SVC) → **94.12%**  
 - Majority Voting (XGBoost + Logistic Regression + SVC) → **94.46% ± 0.97%**
 
+I performed a quick calculation on the Logistic Regression (best performing model) to determine that AUPRC on the test set is 0.9587.
+
 **Key Takeaways:**
 - Models perform consistently around **94–95% accuracy** on the balanced dataset.  
-- Results are strong given the dataset limitations and imbalance.  
+- Results are strong given the dataset limitations and imbalance.
+- Logistic Regression performs the best (Majority Voting ties it).
 - Future improvements could include:  
   - Combining downsampling + upsampling  
   - Evaluating performance on full (imbalanced) data  
