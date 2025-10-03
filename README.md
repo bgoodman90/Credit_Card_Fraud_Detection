@@ -93,7 +93,7 @@ Models were tuned via randomized CV grid search (stratified 5-fold, balanced cla
 I performed a quick calculation on the Logistic Regression (best performing model) to determine that AUPRC on the test set is 0.9587.
 
 **Key Takeaways:**
-- Models perform consistently around **0.94-0.95 F1-Score** and **94–95% accuracy** on the balanced dataset.  
+- Models perform consistently around **0.94-0.95 F1-Score** and **94–95% accuracy** on the balanced (downsampled) dataset.  
 - Results are strong given the dataset limitations and imbalance.
 - Logistic Regression performs the best (Majority Voting ties it).
 - Future improvements could include:  
