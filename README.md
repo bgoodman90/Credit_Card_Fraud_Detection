@@ -73,7 +73,16 @@ If original categorical variables were available, I would:
 
 Models were tuned via randomized CV grid search (stratified 5-fold, balanced classes, fixed random seed).  
 
-**Cross-Validation Accuracy (avg. over 5 folds):**
+**Cross-Validation F1-Score (avg. over 5 folds on balanced data set):**
+- Random Forest → **0.9378**  
+- XGBoost → **0.9425**  
+- Logistic Regression → **0.9426**  
+- Bernoulli Naive Bayes → **0.9036**  
+- Support Vector Classifier (SVC) → **0.9393**  
+- Majority Voting (XGBoost + Logistic Regression + SVC) → **0.9427 +/- 0.0098**
+- Still experimenting with Neural Network, currently close to 0.88 F1-Score on test set. 
+
+**Cross-Validation Accuracy (avg. over 5 folds on balanced data set):**
 - Random Forest → **93.93%**  
 - XGBoost → **94.35%**  
 - Logistic Regression → **94.46%**  
